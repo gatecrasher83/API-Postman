@@ -1,0 +1,1 @@
+newman run testengineer.ru.postman_collection.json -e url.postman_environment.json 

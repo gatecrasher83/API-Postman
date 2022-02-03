@@ -1,0 +1,407 @@
+{
+	"info": {
+		"_postman_id": "c3050e7b-decf-48d9-bd08-06b86f5ffced",
+		"name": "3rd lesson",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "check json value",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check type\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.type).to.eql(\"error\");",
+							"});",
+							"pm.test(\"check wrong type\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.eql(\"OK\");",
+							"});",
+							"pm.test(\"check json include message\", function () {",
+							"    var jsonData = pm.response.text();",
+							"    pm.expect(jsonData).to.include(\"email\");",
+							"});",
+							"pm.test(\"check json include wrong message\", function () {",
+							"    var jsonData = pm.response.text();",
+							"    pm.expect(jsonData).to.include(\"new_email\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "test_demo_1@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Демо 1",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://users.bugred.ru/tasks/rest/doregister",
+					"protocol": "http",
+					"host": [
+						"users",
+						"bugred",
+						"ru"
+					],
+					"path": [
+						"tasks",
+						"rest",
+						"doregister"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "var_let_const",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//определение через var-только до конца функции  ",
+							"pm.test(\"With_var_jsonData_Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    console.log(jsonData);",
+							"",
+							"    pm.expect(jsonData.type).to.eql(\"error\");",
+							"});",
+							"//определение через let-только до конца фигурных скобок",
+							"pm.test(\"with_let_jsonData_Your test name\", function () {",
+							"    let jsonData = pm.response.json();",
+							"",
+							"    console.log(jsonData);",
+							"",
+							"    pm.expect(jsonData.type).to.eql(\"error\");",
+							"});",
+							"//const-неизменяемая переменная",
+							"pm.test(\"const_jsonData_Your test name\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    console.log(jsonData);",
+							"    pm.expect(jsonData.type).to.eql(\"error\");",
+							"});",
+							"",
+							"//если никак не определять, то переменная глобальная, доступна везде ",
+							"pm.test(\"global_jsonData_Your test name\", function () {",
+							"    jsonData = pm.response.json();",
+							"",
+							"    pm.expect(jsonData.type).to.eql(\"error\");",
+							"});",
+							"console.log(jsonData);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "test_demo_1@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Демо 1",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://users.bugred.ru/tasks/rest/doregister",
+					"protocol": "http",
+					"host": [
+						"users",
+						"bugred",
+						"ru"
+					],
+					"path": [
+						"tasks",
+						"rest",
+						"doregister"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "extract_simple_json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"console.log(jsonData);",
+							"console.log(jsonData.name);",
+							"console.log(jsonData.email);",
+							"console.log(jsonData.avatar);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"test_demo_1@gmail.com\"\r\n}"
+				},
+				"url": {
+					"raw": "http://users.bugred.ru/tasks/rest/getuserfull",
+					"protocol": "http",
+					"host": [
+						"users",
+						"bugred",
+						"ru"
+					],
+					"path": [
+						"tasks",
+						"rest",
+						"getuserfull"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "extract_json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"anna=jsonData.suggestions[0].value;",
+							"console.log(anna);",
+							"anna_gender=jsonData.suggestions[0].data.gender;",
+							"console.log(anna_gender);",
+							"pm.test(\"Проверка наличия Анны\", function () {",
+							"    pm.expect(anna).to.eql(\"Анна\");",
+							"});",
+							"pm.test(\"Проверка наличия Анны\", function () {",
+							"    pm.expect(anna).to.eql(\"Анна1\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token 793d2830a6360a1569c8e7b9dd1afeb2f57ffa77",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\": \"Ан\",\r\n    \"gender\": \"FEMALE\"\r\n}"
+				},
+				"url": {
+					"raw": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/fio",
+					"protocol": "https",
+					"host": [
+						"suggestions",
+						"dadata",
+						"ru"
+					],
+					"path": [
+						"suggestions",
+						"api",
+						"4_1",
+						"rs",
+						"suggest",
+						"fio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "extract_XML",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//конвертация xml в json",
+							"var jsonData = xml2Json(responseBody);",
+							"",
+							"console.log(jsonData);",
+							"anna=jsonData.SuggestResponse.suggestions[0].value;",
+							"console.log(anna);",
+							"",
+							"anna_gender=jsonData.SuggestResponse.suggestions[0].data.gender;",
+							"console.log(anna_gender);",
+							"pm.test(\"Проверка наличия Анны\", function () {",
+							"    pm.expect(anna).to.eql(\"Анна\");",
+							"});",
+							"pm.test(\"Проверка наличия Анны\", function () {",
+							"    pm.expect(anna).to.eql(\"Анна\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/xml",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token 793d2830a6360a1569c8e7b9dd1afeb2f57ffa77",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\": \"Ан\",\r\n    \"gender\": \"FEMALE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/fio",
+					"protocol": "https",
+					"host": [
+						"suggestions",
+						"dadata",
+						"ru"
+					],
+					"path": [
+						"suggestions",
+						"api",
+						"4_1",
+						"rs",
+						"suggest",
+						"fio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Object.keys",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"console.log(jsonData);",
+							"console.log(Object.keys(jsonData));",
+							"console.log(Object.keys(pm.response));",
+							"console.log(Object.keys(pm.response.headers));",
+							"console.log(Object.keys(pm.response.headers.members));",
+							"console.log(pm.response.headers.members[3].key);",
+							"pm.test(\"Your test name\", function () {",
+							"     pm.expect(jsonData.type).to.eql(\"error\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "test_demo_1@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Демо 1",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://users.bugred.ru/tasks/rest/doregister",
+					"protocol": "http",
+					"host": [
+						"users",
+						"bugred",
+						"ru"
+					],
+					"path": [
+						"tasks",
+						"rest",
+						"doregister"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
