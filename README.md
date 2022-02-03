@@ -1,2 +1,2 @@
-# API-Postman
+# Postman
 studying API with Postman
