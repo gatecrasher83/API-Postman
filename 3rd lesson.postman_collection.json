@@ -339,6 +339,137 @@
 			"response": []
 		},
 		{
+			"name": "home work(find Malahov)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"console.log(jsonData);",
+							"malahov=jsonData.suggestions[2].data.surname;",
+							"console.log(malahov);",
+							"",
+							"pm.test(\"Find Malahov\", function () {",
+							"    pm.expect(jsonData.suggestions[2].data.surname).to.eql(\"Малахов\");",
+							"});",
+							"",
+							"pm.test(\"Not Find Malahov\", function () {",
+							"    pm.expect(jsonData.suggestions[2].data.surname).to.eql(\"zgkbnzgМалахов\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token 793d2830a6360a1569c8e7b9dd1afeb2f57ffa77",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n\"query\": \"Андрей Мал\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/fio",
+					"protocol": "https",
+					"host": [
+						"suggestions",
+						"dadata",
+						"ru"
+					],
+					"path": [
+						"suggestions",
+						"api",
+						"4_1",
+						"rs",
+						"suggest",
+						"fio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "home work(Charles)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"console.log(jsonData.total);",
+							"console.log(jsonData.data[0].last_name);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users?page=2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Object.keys",
 			"event": [
 				{
