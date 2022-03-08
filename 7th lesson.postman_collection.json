@@ -1,0 +1,475 @@
+{
+	"info": {
+		"_postman_id": "2e26b902-777b-467f-8707-8f813392f5cb",
+		"name": "7th lesson",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "homework if task companys",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Распарсил Json",
+							"jsonData = pm.response.json();",
+							"console.log(jsonData.tasks[0].name);",
+							"",
+							"if (jsonData.tasks) {",
+							"    pm.test( \"name exist\", function(){",
+							"        pm.expect(jsonData.tasks[0]).to.have.property('name').and.to.be.a('string');",
+							"    });",
+							"        ",
+							"    pm.test( \"id_task exist\", function(){",
+							"        pm.expect(jsonData.tasks[0]).to.have.property('id_task').and.to.be.a('number');",
+							"    });",
+							"};",
+							"",
+							"if(jsonData.companys){",
+							"    pm.test(\"name_company exist\", function(){",
+							"        pm.expect(jsonData.companys[0]).to.have.property('name').and.to.be.a(\"string\");",
+							"    });",
+							"",
+							"     pm.test(\"id_company exist\", function(){",
+							"        pm.expect(jsonData.companys[0]).to.have.property('id_company').and.to.be.a(\"number\");",
+							"    });",
+							"",
+							"};",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"test_cu_11@mail.com\"\r\n} \r\n"
+				},
+				"url": {
+					"raw": "http://users.bugred.ru/tasks/rest/getuserfull",
+					"protocol": "http",
+					"host": [
+						"users",
+						"bugred",
+						"ru"
+					],
+					"path": [
+						"tasks",
+						"rest",
+						"getuserfull"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homework suggestions for forEach",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Распарсили JSON",
+							"var jsonData = pm.response.json();",
+							"//проверка через for",
+							"for(var i = 0;i<jsonData.suggestions.length;i++){",
+							"    pm.test('response has only Male',function(){",
+							"        pm.expect(jsonData.suggestions[i].data.gender).to.eql(\"MALE\");",
+							"    });",
+							"",
+							"     pm.test('response has not Female',function(){",
+							"        pm.expect(jsonData.suggestions[i].data.gender).to.not.eql(\"FEMALE\");",
+							"    });    ",
+							"",
+							"    pm.test('response has only name',function(){",
+							"        pm.expect(jsonData.suggestions[i].data).to.have.property(\"name\");",
+							"    });",
+							"",
+							"    pm.test('response has not value surname',function(){",
+							"        pm.expect(jsonData.suggestions[i].data).to.have.property(\"surname\", null);",
+							"    });",
+							"};",
+							"",
+							"//проверка через forEach",
+							"jsonData.suggestions.forEach(function(element, i)",
+							"{",
+							"    pm.test(\"only men with forEach\" + i,function(){",
+							"        pm.expect(element.data.gender).to.eql(\"MALE\");",
+							"    });",
+							"    pm.test(\"only name with forEach\" + i,function(){",
+							"        pm.expect(element.data).to.have.property(\"name\");",
+							"    });",
+							"    pm.test(\"only name with forEach\" + i,function(){",
+							"        pm.expect(element.data.name).to.not.be.null;",
+							"    });",
+							"     pm.test(\"surname with forEach\" + i,function(){",
+							"        pm.expect(element.data).to.have.property(\"surname\",null);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token 793d2830a6360a1569c8e7b9dd1afeb2f57ffa77"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"query\": \"А\",\r\n\"gender\": \"MALE\",\r\n\"parts\": [\"NAME\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/fio",
+					"protocol": "https",
+					"host": [
+						"suggestions",
+						"dadata",
+						"ru"
+					],
+					"path": [
+						"suggestions",
+						"api",
+						"4_1",
+						"rs",
+						"suggest",
+						"fio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homework suggestions for forEach Anna",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Распарсили JSON",
+							"var jsonData = pm.response.json();",
+							"//проверка через for",
+							"for(var i = 0;i<jsonData.suggestions.length;i++){",
+							"    if(jsonData.suggestions[i].data.name == \"Анна\"){",
+							"        pm.test('response has Анна',function(){",
+							"        pm.expect(jsonData.suggestions[i].data).to.have.property(\"name\", \"Анна\");",
+							"    });",
+							"    };",
+							"};",
+							"",
+							"",
+							"//проверка через forEach",
+							"jsonData.suggestions.forEach(function(element, i)",
+							"{",
+							"    if(element.data.name === \"Анна\"){",
+							"    pm.test(\"response has 'Анна' через forEach в элементе №\" + i,function(){",
+							"        pm.expect(element.data.name).to.eql(\"Анна\");",
+							"    });",
+							"    };",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token 793d2830a6360a1569c8e7b9dd1afeb2f57ffa77"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"query\": \"Ан\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/fio",
+					"protocol": "https",
+					"host": [
+						"suggestions",
+						"dadata",
+						"ru"
+					],
+					"path": [
+						"suggestions",
+						"api",
+						"4_1",
+						"rs",
+						"suggest",
+						"fio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homework sendRequest",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const echoPostRequest = {\r",
+							"  url: 'http://users.bugred.ru/tasks/rest/doregister',\r",
+							"  method: 'POST',\r",
+							"  body: {\r",
+							"    mode: 'raw',\r",
+							"    raw: JSON.stringify({ \r",
+							"        email: \"test_cu_12@mail.com\",\r",
+							"        name: \"Демо 1\",\r",
+							"        password: 1\r",
+							"    })\r",
+							"  }\r",
+							"};\r",
+							"\r",
+							"pm.sendRequest(echoPostRequest, function (err, res) {\r",
+							"  console.log(err ? err : res.json().message);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "test_cu_11@mail.com",
+							"type": "text"
+						},
+						{
+							"key": "hobby",
+							"value": "Стрельба из лука, Настолки",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Красавчик",
+							"type": "text"
+						},
+						{
+							"key": "name1",
+							"value": "Тестовый, ясен пень",
+							"type": "text"
+						},
+						{
+							"key": "surname1",
+							"value": "Иванов",
+							"type": "text"
+						},
+						{
+							"key": "fathername1",
+							"value": "Петров",
+							"type": "text"
+						},
+						{
+							"key": "cat",
+							"value": "Маруся",
+							"type": "text"
+						},
+						{
+							"key": "dog",
+							"value": "Ушастый",
+							"type": "text"
+						},
+						{
+							"key": "parrot",
+							"value": "Васька",
+							"type": "text"
+						},
+						{
+							"key": "cavy",
+							"value": "Кто ты?",
+							"type": "text"
+						},
+						{
+							"key": "hamster",
+							"value": "Хомяк",
+							"type": "text"
+						},
+						{
+							"key": "squirrel",
+							"value": "Белая горячка к нам пришла",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "333 33 33",
+							"type": "text"
+						},
+						{
+							"key": "adres",
+							"value": "адрес 1",
+							"type": "text"
+						},
+						{
+							"key": "gender",
+							"value": "m",
+							"type": "text"
+						},
+						{
+							"key": "birthday",
+							"value": "01.01.1900",
+							"type": "text"
+						},
+						{
+							"key": "date_start",
+							"value": "11.11.2000",
+							"type": "text"
+						},
+						{
+							"key": "inn",
+							"value": "123456789012",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://users.bugred.ru/tasks/rest/fullupdateuser",
+					"protocol": "http",
+					"host": [
+						"users",
+						"bugred",
+						"ru"
+					],
+					"path": [
+						"tasks",
+						"rest",
+						"fullupdateuser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homework create company",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.sendRequest('https://postman-echo.com/get', function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(err);\r",
+							"    } else {\r",
+							"        pm.environment.set(\"variable_key\", \"new_value\");\r",
+							"        console.log(\"Успех!\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"const echoPostRequest = {\r",
+							"  url: 'https://postman-echo.com/post',\r",
+							"  method: 'POST',\r",
+							"  header: 'headername1:value1',\r",
+							"  body: {\r",
+							"    mode: 'raw',\r",
+							"    raw: JSON.stringify({ key: 'this is json' })\r",
+							"  }\r",
+							"};\r",
+							"\r",
+							"pm.sendRequest(echoPostRequest, function (err, res) {\r",
+							"    if (err) {\r",
+							"        console.log(err);\r",
+							"    } else {\r",
+							"        pm.environment.set(\"variable_key\", \"new_value\");\r",
+							"        console.log(\"Успешное выполнение POST-запроса!\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.sendRequest(echoPostRequest, function (err, res) {\r",
+							"  console.log(err ? err : res.json());\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.sendRequest('https://postman-echo.com/get', function (err, res) {\r",
+							"  if (err) { console.log(err); }\r",
+							"  pm.test('response should be okay to process', function () {\r",
+							"    pm.expect(err).to.equal(null);\r",
+							"    pm.expect(res).to.have.property('code', 200);\r",
+							"    pm.expect(res).to.have.property('status', 'OK');\r",
+							"  });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {\r",
+							"    console.log(response.json());\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n  \"company_name\": \"New Company\",\r\n  \"company_type\": \"ООО\",\r\n  \"company_users\": [\"test_4@gmail.com\", \"mrak22@list.ru\"],\r\n  \"email_owner\": \"aa+1@mail.com\"\r\n}"
+				},
+				"url": {
+					"raw": "http://users.bugred.ru/tasks/rest/createcompany",
+					"protocol": "http",
+					"host": [
+						"users",
+						"bugred",
+						"ru"
+					],
+					"path": [
+						"tasks",
+						"rest",
+						"createcompany"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,206 @@
+{
+	"info": {
+		"_postman_id": "9e22fcf3-c1c2-424f-a652-9856afa4a8bd",
+		"name": "8th lesson",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "home work вхождение море",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var mar = 'море, море, океан, море, море, яхта';",
+							"var index = [];",
+							"var i = 0;",
+							"var a = 1;",
+							"",
+							"while(i < mar.lastIndexOf('море')){",
+							"    index.push(a + \" -е вхождение : '\"+ (mar.indexOf('море', i) + \"'\"));",
+							"    i = (mar.indexOf('море', i)) + 1;",
+							"    a ++;",
+							"       ",
+							"};",
+							"console.log(index);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "test_demo_16@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Красавчик 678",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://users.bugred.ru/tasks/rest/doregister",
+					"protocol": "http",
+					"host": [
+						"users",
+						"bugred",
+						"ru"
+					],
+					"path": [
+						"tasks",
+						"rest",
+						"doregister"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homework suggestions for forEach Anna Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Распарсили JSON",
+							"var jsonData = pm.response.json();",
+							"var surname_arr = [];",
+							"var name_arr = [];",
+							"var patronymic_arr = [];",
+							"a = 1;",
+							"b = 1;",
+							"c = 1;",
+							"",
+							"//проверка через for",
+							"for(var i = 0;i<jsonData.suggestions.length;i++){",
+							"    if (jsonData.suggestions[i].data.surname !== null){",
+							"        surname_arr.push(a + \" индекс вхождения \" + (jsonData.suggestions[i].data.surname));",
+							"        a = a + 1;",
+							"    };",
+							"    if (jsonData.suggestions[i].data.name !== null){",
+							"        name_arr.push(b + \" индекс вхождения \" + (jsonData.suggestions[i].data.name));",
+							"        b = b + 1;",
+							"    };",
+							"    if (jsonData.suggestions[i].data.patronymic !== null){",
+							"        patronymic_arr.push(c + \" индекс вхождения \" + (jsonData.suggestions[i].data.patronymic));",
+							"        c = c + 1;",
+							"    };    ",
+							"    if(jsonData.suggestions[i].data.name == \"Анна\"){",
+							"        pm.test('response has Анна',function(){",
+							"        pm.expect(jsonData.suggestions[i].data).to.have.property(\"name\", \"Анна\");",
+							"    });",
+							"    };",
+							"};",
+							"console.log(surname_arr);",
+							"console.log(name_arr);",
+							"console.log(patronymic_arr);",
+							"",
+							"",
+							"//проверка через forEach",
+							"var surname_arr = [];",
+							"var name_arr = [];",
+							"var patronymic_arr = [];",
+							"",
+							"a = 1;",
+							"b = 1;",
+							"c = 1;",
+							"",
+							"jsonData.suggestions.forEach(function(element, i){",
+							"    ",
+							"    if (jsonData.suggestions[i].data.surname !== null){",
+							"        surname_arr.push(a + \" индекс вхождения \" + (jsonData.suggestions[i].data.surname));",
+							"        a = a + 1;",
+							"    };",
+							"    if (jsonData.suggestions[i].data.name !== null){",
+							"        name_arr.push(b + \" индекс вхождения \" + (jsonData.suggestions[i].data.name));",
+							"        b = b + 1;",
+							"    };",
+							"    if (jsonData.suggestions[i].data.patronymic !== null){",
+							"        patronymic_arr.push(c + \" индекс вхождения \" +(jsonData.suggestions[i].data.patronymic));",
+							"        c = c + 1;",
+							"    };    ",
+							"",
+							"    if(element.data.name === \"Анна\"){",
+							"    pm.test(\"response has 'Анна' через forEach в элементе №\" + i,function(){",
+							"        pm.expect(element.data.name).to.eql(\"Анна\");",
+							"    });",
+							"    };",
+							"});",
+							"console.log(surname_arr);",
+							"console.log(name_arr);",
+							"console.log(patronymic_arr);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token 793d2830a6360a1569c8e7b9dd1afeb2f57ffa77"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"query\": \"Ан\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/fio",
+					"protocol": "https",
+					"host": [
+						"suggestions",
+						"dadata",
+						"ru"
+					],
+					"path": [
+						"suggestions",
+						"api",
+						"4_1",
+						"rs",
+						"suggest",
+						"fio"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

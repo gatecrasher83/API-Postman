@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "4f16ce36-e570-4822-9e4f-2c8e3423f620",
+		"name": "6th lesson",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "dadata",
+			"item": [
+				{
+					"name": "1.homework response has family json",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Распарсили JSON",
+									"var jsonData = pm.response.text();",
+									"var jsonDataText = pm.response.text();",
+									"",
+									"",
+									"pm.test(\"есть  Малахов\", function () {",
+									"    pm.expect(jsonDataText).to.include('Малахов');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"Token\", \"793d2830a6360a1569c8e7b9dd1afeb2f57ffa77\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/xml"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{Token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<req>\r\n    <query>Мал</query>\r\n    <gender>MALE</gender>\r\n    <count>5</count>\r\n</req>\r\n"
+						},
+						"url": {
+							"raw": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/fio",
+							"protocol": "https",
+							"host": [
+								"suggestions",
+								"dadata",
+								"ru"
+							],
+							"path": [
+								"suggestions",
+								"api",
+								"4_1",
+								"rs",
+								"suggest",
+								"fio"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.homework response has family xml",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Распарсили JSON",
+									"var jsonData = xml2Json(responseBody);",
+									"",
+									"pm.test(\"есть  Малахов\", function () {",
+									"    pm.expect(jsonData.SuggestResponse.suggestions[2].data.surname).to.eql('Малахов');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{Token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"query\": \"Андрей Мал\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/fio",
+							"protocol": "https",
+							"host": [
+								"suggestions",
+								"dadata",
+								"ru"
+							],
+							"path": [
+								"suggestions",
+								"api",
+								"4_1",
+								"rs",
+								"suggest",
+								"fio"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "homework home random name and email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Распарсили JSON",
+							"var jsonData = pm.response.json();",
+							"pm.globals.set(\"output_name\", jsonData.name);",
+							"pm.globals.set(\"output_email\", jsonData.email);",
+							"console.log(pm.globals.get(\"output_name\"));",
+							"console.log(pm.globals.get(\"output_email\"));",
+							"",
+							"",
+							"",
+							"pm.test(\"name — это строка\", function () {",
+							"    pm.expect(jsonData.name).to.be.a('string');",
+							"});",
+							"",
+							"pm.test(\"avatar через an\", function () {",
+							"    pm.expect(jsonData.avatar).to.be.an('string');",
+							"});",
+							"",
+							"pm.test(\"проверим весь объект\", function () {",
+							"    pm.expect(jsonData).to.be.a('object');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Демо {{$randomInt}}\",\r\n    \"avatar\": \"http://users.bugred.ru//tmp/default_avatar.jpg\",\r\n    \"password\": \"4dff4ea340f0a823f15d3f4f01ab62eae0e5da579ccb851f8db9dfe84c58b2b37b89903a740e1ee172da793a6e79d560e5f7f9bd058a12a280433ed6fa46510a\",\r\n    \"birthday\": 0,\r\n    \"email\": \"test_demo_{{День_рождения}}@gmail.com\",\r\n    \"gender\": \"\",\r\n    \"date_start\": 0,\r\n    \"hobby\": \"\"\r\n}"
+				},
+				"url": {
+					"raw": "http://users.bugred.ru/tasks/rest/doregister",
+					"protocol": "http",
+					"host": [
+						"users",
+						"bugred",
+						"ru"
+					],
+					"path": [
+						"tasks",
+						"rest",
+						"doregister"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

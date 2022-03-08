@@ -1,0 +1,196 @@
+{
+	"info": {
+		"_postman_id": "a990cbe7-1c84-4bfb-a483-bc589a47f3a3",
+		"name": "2nd lesson",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "empty request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Wrong status code\", function () {\r",
+							"    pm.response.to.have.status(600);\r",
+							"});\r",
+							"pm.test(\"Check if Ervin Howell has email 'Shanna@melissa.tv' \", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[1].email).to.eql(\"Shanna@melissa.tv\");\r",
+							"});\r",
+							"pm.test(\"Check if Ervin Howell has email 'gbs' \", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[1].email).to.eql(\"gbs\");\r",
+							"});\r",
+							"console.log(pm.response.code);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "10",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create user with JSON",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Status code name has status 'Created'\", function () {\r",
+							"    pm.response.to.have.status(\"Created\");\r",
+							"});\r",
+							"pm.test(\"Status code name hasn't status 'Created'\", function () {\r",
+							"    pm.response.to.have.status(\"Not Created\");\r",
+							"});\r",
+							"console.log(pm.response.code);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 11,\r\n    \"name\": \"Rajkumar SM\",\r\n    \"username\": \"stm\",\r\n    \"email\": \"user@testengineer.ru\",\r\n    \"address\": {\r\n      \"street\": \"Gagarina\",\r\n      \"suite\": \"31\",\r\n      \"city\": \"Moscow\",\r\n      \"zipcode\": \"600007\",\r\n      \"geo\": {\r\n        \"lat\": \"10.0000\",\r\n        \"lng\": \"80.0000\"\r\n      }\r\n    },\r\n    \"phone\": \"1-2345-6-7890\",\r\n    \"website\": \"testengineer.ru\",\r\n    \"company\": {\r\n      \"name\": \"testengineer.ru\",\r\n      \"catchPhrase\": \"website for QA engineers\",\r\n      \"bs\": \"real-time tutorials\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check response header",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is not present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type1324657654354654\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is not application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('51654654application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header include value 'application/json'\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header not include value 'application/json'\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include('101application/json');\r",
+							"});\r",
+							"console.log(pm.response.headers.get('Content-Type'))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check response value",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Value is correct\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Antonette\");\r",
+							"});\r",
+							"pm.test(\"Value is not correct\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"hdvjhs\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

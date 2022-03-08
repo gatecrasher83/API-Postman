@@ -1,0 +1,344 @@
+{
+	"info": {
+		"_postman_id": "4efd2575-0ee6-49ba-b9d7-5fae3aa6c008",
+		"name": "5th lesson",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "homework type of element",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Распарсил JSON",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"suggestions — это массив!\", function () {",
+							"    pm.expect(jsonData.suggestions).to.be.an('array');",
+							"});",
+							"",
+							"pm.test(\"проверим дочерний объект\", function () {",
+							"    pm.expect(jsonData.suggestions[0].data).to.be.a('object');",
+							"});",
+							"",
+							"pm.test(\"qc - строка\", function () {",
+							"    pm.expect(jsonData.suggestions[0].data.qc).to.be.a('string').to.have.property('0');",
+							"});",
+							"",
+							"pm.test(\"qc - строка\", function () {",
+							"    pm.expect(jsonData.suggestions[0].data).to.have.property('qc').that.is.a('string');",
+							"});",
+							"",
+							"pm.test(\"surname - null\", function () {",
+							"    pm.expect(jsonData.suggestions[0].data.surname).to.be.a('null');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token 793d2830a6360a1569c8e7b9dd1afeb2f57ffa77"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<req>\r\n    <query>Ан</query>\r\n    <gender>FEMALE</gender>\r\n    <count>5</count>\r\n</req>\r\n"
+				},
+				"url": {
+					"raw": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/fio",
+					"protocol": "https",
+					"host": [
+						"suggestions",
+						"dadata",
+						"ru"
+					],
+					"path": [
+						"suggestions",
+						"api",
+						"4_1",
+						"rs",
+						"suggest",
+						"fio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homework constructor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"function Cat (name, year, color) {",
+							"this.name = name;",
+							"this.year = year;",
+							"this.color = color;",
+							"};",
+							"",
+							"var Kitty = new Cat(\"Kitty\", 1, 'red');",
+							"",
+							"console.log(Kitty);",
+							"",
+							"pm.test(\"Cat — это объект\", function () {",
+							"    pm.expect(Kitty).to.be.an('object');",
+							"});",
+							"",
+							"pm.test(\"Cat — это объект, наследуемый от объекта!\", function () {",
+							"    pm.expect(Kitty).to.be.an.instanceof(Object);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"test_cu_11@mail.com\"\r\n} \r\n"
+				},
+				"url": {
+					"raw": "http://users.bugred.ru/tasks/rest/getuserfull",
+					"protocol": "http",
+					"host": [
+						"users",
+						"bugred",
+						"ru"
+					],
+					"path": [
+						"tasks",
+						"rest",
+						"getuserfull"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homework response has family xml",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Распарсили JSON",
+							"var jsonData = xml2Json(responseBody);",
+							"",
+							"pm.test(\"есть  Малахов\", function () {",
+							"    pm.expect(jsonData.SuggestResponse.suggestions[2].data.surname).to.eql('Малахов');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/xml"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token 793d2830a6360a1569c8e7b9dd1afeb2f57ffa77"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"query\": \"Андрей Мал\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/fio",
+					"protocol": "https",
+					"host": [
+						"suggestions",
+						"dadata",
+						"ru"
+					],
+					"path": [
+						"suggestions",
+						"api",
+						"4_1",
+						"rs",
+						"suggest",
+						"fio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homework response has family json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Распарсили JSON",
+							"var jsonData = pm.response.text();",
+							"var jsonDataText = pm.response.text();",
+							"",
+							"",
+							"pm.test(\"есть  Малахов\", function () {",
+							"    pm.expect(jsonDataText).to.include('Малахов');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token 793d2830a6360a1569c8e7b9dd1afeb2f57ffa77"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<req>\r\n    <query>Мал</query>\r\n    <gender>MALE</gender>\r\n    <count>5</count>\r\n</req>\r\n"
+				},
+				"url": {
+					"raw": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/fio",
+					"protocol": "https",
+					"host": [
+						"suggestions",
+						"dadata",
+						"ru"
+					],
+					"path": [
+						"suggestions",
+						"api",
+						"4_1",
+						"rs",
+						"suggest",
+						"fio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "home work cookie",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Распарсили JSON",
+							"var jsonData = pm.response.text();",
+							"var jsonDataText = pm.response.text();",
+							"",
+							"",
+							"pm.test(\"есть  Малахов\", function () {",
+							"    pm.expect(jsonDataText).to.include('Малахов');",
+							"});",
+							"pm.test(\"Content-Type — есть value\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=UTF-8\");",
+							"});",
+							"",
+							"pm.test(\"include для заголовка через get\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Transfer-Encoding\")).to.include(\"chunked\");",
+							"});",
+							"console.log(pm.cookies.count());",
+							"",
+							"pm.test(\"cookies подсчет через count\", function () {",
+							"    pm.expect(pm.cookies.count()).to.eql(1);",
+							"});",
+							"",
+							"pm.test(\"cookies сравнить через get\", function () {",
+							"    pm.expect(pm.cookies.get(\"__ddg1\")).to.eql(\"2xv7JsjOrB8ooUqZ1uqu\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token 793d2830a6360a1569c8e7b9dd1afeb2f57ffa77"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<req>\r\n    <query>Мал</query>\r\n    <gender>MALE</gender>\r\n    <count>5</count>\r\n</req>\r\n"
+				},
+				"url": {
+					"raw": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/fio",
+					"protocol": "https",
+					"host": [
+						"suggestions",
+						"dadata",
+						"ru"
+					],
+					"path": [
+						"suggestions",
+						"api",
+						"4_1",
+						"rs",
+						"suggest",
+						"fio"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

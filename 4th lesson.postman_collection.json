@@ -1,0 +1,133 @@
+{
+	"info": {
+		"_postman_id": "6338fd51-45de-4a01-bce5-772753fb39b2",
+		"name": "4th lesson",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "home work picture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var picture = \"(\\\\__/)\\n (='.'=)\\n E[:]|||||[:]З\\n (\\\")_(\\\")\"",
+							";",
+							"console.log(picture);",
+							"",
+							"pm.test(\"expect picture has 3rd string\", function(){",
+							"    pm.expect(picture).to.include('E[:]|||||[:]З\\n')",
+							"});",
+							"pm.test(\"wrong expect picture has 3rd string\", function(){",
+							"    pm.expect(picture).to.include('tfytfE[:]|||||[:]З\\n')",
+							"});",
+							"pm.test(\"expect picture has 2nd and 3rd string\", function(){",
+							"    pm.expect(picture).to.include(\"(='.'=)\\n E[:]|||||[:]З\\n\")",
+							"});",
+							"pm.test(\"wrong expect picture has 2nd and 3rd string\", function(){",
+							"    pm.expect(picture).to.include(\"(='.'=)\\n E[:]|||||[:]551З\\n\")",
+							"});",
+							"pm.test(\"whole picture to.eql\", function(){",
+							"    pm.expect(picture).to.eql(\"(\\\\__/)\\n (='.'=)\\n E[:]|||||[:]З\\n (\\\")_(\\\")\")",
+							"});",
+							"pm.test(\"whole picture to.eql wrong\", function(){",
+							"    pm.expect(picture).to.eql(\"(\\\\__/)\\n (='.'895=)\\n E[:]|||||[:]З\\n (\\\")_(\\\")\")",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"type": "text",
+						"value": "text/plain"
+					}
+				],
+				"url": {
+					"raw": "http://httpbin.org/deny",
+					"protocol": "http",
+					"host": [
+						"httpbin",
+						"org"
+					],
+					"path": [
+						"deny"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "home work nested, include..",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"console.log(pm.response.json());",
+							"",
+							"pm.test(\"to.have.property\",function(){",
+							"    pm.expect(jsonData).to.have.property(\"data\")",
+							"});",
+							"pm.test(\"to.have.property into data\",function(){",
+							"    pm.expect(jsonData.data[0]).to.have.property(\"email\")",
+							"});",
+							"pm.test(\"to.have.whole property into data\",function(){",
+							"    pm.expect(jsonData.data[0]).to.have.property(\"email\", \"michael.lawson@reqres.in\" )",
+							"});",
+							"pm.test(\"to.have.property into data\",function(){",
+							"    pm.expect(jsonData.data[1]).to.have.deep.property(\"id\").that.is.a('number')",
+							"});",
+							"",
+							"pm.test(\"data\", function(){",
+							"    pm.expect(jsonData.data[0].first_name).to.deep.include(\"Michael\")",
+							"});",
+							"",
+							"pm.test(\"nested.data\", function(){",
+							"    pm.expect(jsonData).to.deep.nested.include({'data[0].first_name':\"Michael\"})",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://reqres.in/api/users?page=2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
